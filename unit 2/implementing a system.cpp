@@ -1,0 +1,63 @@
+#include <iostream>
+
+using namespace std;
+
+// Node structure for the doubly linked list
+struct Node {
+    int data;
+    Node* prev;
+    Node* next;
+};
+
+// Function to create a new node
+Node* createNode(int data) {
+    Node* newNode = new Node;
+    newNode->data = data;
+    newNode->prev = nullptr;
+    newNode->next = nullptr;
+    return newNode;
+}
+
+// Function to insert a score at the front of the doubly linked list
+void insertScoreAtFront(Node*& head, Node*& tail, int score) {
+    Node* newNode = createNode(score);
+    if (head == nullptr) {
+        head = newNode;
+        tail = newNode;
+    } else {
+        newNode->next = head;
+        head->prev = newNode;
+        head = newNode;
+    }
+}
+
+// Function to print the doubly linked list
+void printScores(Node* head) {
+    while (head != nullptr) {
+        cout << head->data << " ";
+        head = head->next;
+    }
+    cout << endl;
+}
+
+int main() {
+    Node* head = nullptr;
+    Node* tail = nullptr;
+
+    int score;
+    while (cin >> score) {
+        insertScoreAtFront(head, tail, score);
+        cout << "Node Inserted" << endl;
+        printScores(head);
+    }
+
+    // Deallocate memory (free nodes)
+    while (head != nullptr) {
+        Node* temp = head;
+        head = head->next;
+        delete temp;
+    }
+
+    return 0;
+}
+
